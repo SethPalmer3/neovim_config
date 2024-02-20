@@ -7,19 +7,19 @@
 Kickstart.nvim is *not* a distribution.
 
 Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, understand
-  what your configuration is doing, and modify it to suit your needs.
+The goal is that you can read every line of code, top-to-bottom, understand
+what your configuration is doing, and modify it to suit your needs.
 
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
+Once you've done that, you should start exploring, configuring and tinkering to
+explore Neovim!
 
-  If you don't know anything about Lua, I recommend taking some time to read through
-  a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
+If you don't know anything about Lua, I recommend taking some time to read through
+a guide. One possible example:
+- https://learnxinyminutes.com/docs/lua/
 
 
-  And then you can explore or search through `:help lua-guide`
-  - https://neovim.io/doc/user/lua-guide.html
+And then you can explore or search through `:help lua-guide`
+- https://neovim.io/doc/user/lua-guide.html
 
 
 Kickstart Guide:
@@ -88,7 +88,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -117,6 +117,7 @@ require('lazy').setup({
       -- Adds LSP completion capabilities
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
 
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
@@ -124,7 +125,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -213,6 +214,13 @@ require('lazy').setup({
       require('onedark').load()
     end,
   },
+  {
+    'morhetz/gruvbox',
+    config = function()
+      vim.g.gruvbox_contrast_dark = "soft"
+      vim.cmd [[colorscheme gruvbox]]
+    end,
+  },
 
   {
     -- Set lualine as statusline
@@ -283,48 +291,101 @@ require('lazy').setup({
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
-}, {})
+  {
+    'junegunn/vim-peekaboo',
+  },
+  {
+    'chentoast/marks.nvim',
+    config = function()
+      require 'marks'.setup {
+        -- whether to map keybinds or not. default true
+        default_mappings = true,
+        -- which builtin marks to show. default {}
+        builtin_marks = { ".", "<", ">", "^", "[", "]", "'" },
+        -- whether movements cycle back to the beginning/end of buffer. default true
+        cyclic = true,
+        -- whether the shada file is updated after modifying uppercase marks. default false
+        force_write_shada = false,
+        -- how often (in ms) to redraw signs/recompute mark positions.
+        -- higher values will have better performance but may cause visual lag,
+        -- while lower values may cause performance penalties. default 150.
+        refresh_interval = 250,
+        -- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase
+        -- marks, and bookmarks.
+        -- can be either a table with all/none of the keys, or a single number, in which case
+        -- the priority applies to all marks.
+        -- default 10.
+        sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
+        -- disables mark tracking for specific filetypes. default {}
+        excluded_filetypes = {},
+        -- disables mark tracking for specific buftypes. default {}
+        excluded_buftypes = {},
+        -- marks.nvim allows you to configure up to 10 bookmark groups, each with its own
+        -- sign/virttext. Bookmarks can be used to group together positions and quickly move
+        -- across multiple buffers. default sign is '!@#$%^&*()' (from 0 to 9), and
+        -- default virt_text is "".
+        bookmark_0 = {
+          sign = "⚑",
+          virt_text = "hello world",
+          -- explicitly prompt for a virtual line annotation when setting a bookmark from this group.
+          -- defaults to false.
+          annotate = false,
+        },
+        mappings = {}
+      }
+    end,
+  },
+}, {}
+)
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.o.hlsearch       = false
 
 -- Make line numbers default
-vim.wo.number = true
+vim.o.number         = true
+vim.o.relativenumber = true
 
 -- Enable mouse mode
-vim.o.mouse = 'a'
+vim.o.mouse          = 'a'
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
+vim.o.clipboard      = 'unnamedplus'
 
 -- Enable break indent
-vim.o.breakindent = true
+vim.o.breakindent    = true
 
 -- Save undo history
-vim.o.undofile = true
+vim.o.undofile       = true
 
 -- Case-insensitive searching UNLESS \C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
+vim.o.ignorecase     = true
+vim.o.smartcase      = true
 
 -- Keep signcolumn on by default
-vim.wo.signcolumn = 'yes'
+vim.wo.signcolumn    = 'yes'
 
 -- Decrease update time
-vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+vim.o.updatetime     = 250
+vim.o.timeoutlen     = 300
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.o.completeopt    = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
-vim.o.termguicolors = true
+vim.o.termguicolors  = true
+
+-- Scroll padding
+vim.o.scrolloff      = 8
+
+-- Tab size
+vim.o.tabstop        = 4
+vim.o.shiftwidth     = 4
 
 -- [[ Basic Keymaps ]]
 
@@ -339,6 +400,14 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', ']w', function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN }) end,
+  { desc = 'Go to next warning' })
+vim.keymap.set('n', '[w', function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN }) end,
+  { desc = 'Go to previous warning' })
+vim.keymap.set('n', ']e', function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end,
+  { desc = 'Go to next error' })
+vim.keymap.set('n', '[e', function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end,
+  { desc = 'Go to previous error' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
@@ -528,6 +597,7 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ca', function()
     vim.lsp.buf.code_action { context = { only = { 'quickfix', 'refactor', 'source' } } }
   end, '[C]ode [A]ction')
+  nmap('<leader>cf', vim.lsp.buf.format, '[C]ode [F]ormat')
 
   nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -634,6 +704,31 @@ local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
+cmp.setup.filetype('gitcommit', {
+  sources = cmp.config.sources({
+    { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
 
 cmp.setup {
   snippet = {
@@ -650,7 +745,7 @@ cmp.setup {
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
-    ['<CR>'] = cmp.mapping.confirm {
+    ['<C-y>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
@@ -680,5 +775,19 @@ cmp.setup {
   },
 }
 
+local keymap = vim.api.nvim_set_keymap
+local default_opts = { noremap = true, silent = true }
+
+keymap("n", "[b", ":bprevious<CR>", default_opts)
+keymap("n", "]b", ":bnext<CR>", default_opts)
+keymap("n", "[B", ":bfirst<CR>", default_opts)
+keymap("n", "]B", ":blast<CR>", default_opts)
+keymap("n", "<C-u>", "<C-u>zz", default_opts)
+keymap("n", "<C-d>", "<C-d>zz", default_opts)
+keymap("n", "<C-b>", "<C-b>zz", default_opts)
+keymap("n", "<C-f>", "<C-f>zz", default_opts)
+keymap("n", "[t", "gT", default_opts)
+keymap("n", "]t", "gt", default_opts)
+vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
