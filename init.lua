@@ -28,6 +28,15 @@ require('lazy').setup({
   { import = 'custom' },
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
+  'mbbill/undotree',
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup()
+    end
+  },
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -93,11 +102,35 @@ require('treesitter_settings')
 --  This function gets run when an LSP connects to a particular buffer.
 
 require('lsp_settings')
+vim.g.rustaceanvim = {
+  -- Plugin configuration
+  tools = {
+  },
+  -- LSP configuration
+  server = {
+    on_attach = function(client, bufnr)
+      -- you can also put keymaps in here
+    end,
+    default_settings = {
+      -- rust-analyzer language server configuration
+      ['rust-analyzer'] = {
+      },
+    },
+  },
+  -- DAP configuration
+  dap = {
+  },
+}
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 
 require('cmp_settings')
+
+-- [[ Custom commands ]]
+
+vim.cmd [[command! Vterm execute 'vsplit | term://bash']]
+vim.cmd [[command! Sterm execute 'split| term://bash']]
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

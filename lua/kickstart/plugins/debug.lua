@@ -43,6 +43,7 @@ return {
     }
 
     -- Basic debugging keymaps, feel free to change to your liking!
+    vim.keymap.set('n', '<leader>dq', dap.terminate, { desc = 'Debug: Terminate Session' })
     vim.keymap.set('n', '<leader>ds', dap.continue, { desc = 'Debug: Start/Continue' })
     vim.keymap.set('n', '<leader>di', dap.step_into, { desc = 'Debug: Step Into' })
     vim.keymap.set('n', '<leader>do', dap.step_over, { desc = 'Debug: Step Over' })
