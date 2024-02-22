@@ -1,4 +1,6 @@
 return {
+	-- Undo tree
+	'mbbill/undotree',
 	-- Git related plugins
 	'tpope/vim-fugitive',
 	'tpope/vim-rhubarb',
@@ -7,7 +9,7 @@ return {
 	'tpope/vim-sleuth',
 
 	-- Keybind helper
-	{ 'folke/which-key.nvim', opts = {} },
+	{ 'folke/which-key.nvim',  opts = {} },
 
 	-- "gc" to comment visual regions/lines
 	{ 'numToStr/Comment.nvim', opts = {} },

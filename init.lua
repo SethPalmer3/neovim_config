@@ -1,5 +1,8 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+-- [[ Basic Keymaps ]]
+
+require('keymaps')
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
@@ -24,113 +27,116 @@ vim.opt.rtp:prepend(lazypath)
 --  You can also configure plugins after the setup call,
 --    as they will be available in your neovim runtime.
 -- require('lazy').setup('custom.one_liners')
-require('lazy').setup({
-  { import = 'custom' },
-  -- NOTE: This is where your plugins related to LSP can be installed.
-  --  The configuration is done below. Search for lspconfig to find it below.
-  'mbbill/undotree',
-  {
-    "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup()
-    end
-  },
-  {
-    -- Set lualine as statusline
-    'nvim-lualine/lualine.nvim',
-    -- See `:help lualine.txt`
-    opts = {
-      options = {
-        icons_enabled = false,
-        theme = 'auto',
-        component_separators = '|',
-        section_separators = '',
+if vim.g.vscode then
+  require('lazy').setup({
+    { 'numToStr/Comment.nvim', opts = {} },
+
+    { 'junegunn/vim-peekaboo', },
+  }, {});
+else
+  require('lazy').setup({
+    { import = 'custom' },
+    -- NOTE: This is where your plugins related to LSP can be installed.
+    --  The configuration is done below. Search for lspconfig to find it below.
+    {
+      "kylechui/nvim-surround",
+      version = "*", -- Use for stability; omit to use `main` branch for the latest features
+      event = "VeryLazy",
+      config = function()
+        require("nvim-surround").setup()
+      end
+    },
+    {
+      -- Set lualine as statusline
+      'nvim-lualine/lualine.nvim',
+      -- See `:help lualine.txt`
+      opts = {
+        options = {
+          icons_enabled = false,
+          theme = 'auto',
+          component_separators = '|',
+          section_separators = '',
+        },
       },
     },
-  },
 
-  {
-    -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help ibl`
-    main = 'ibl',
-    opts = {},
-  },
+    {
+      -- Add indentation guides even on blank lines
+      'lukas-reineke/indent-blankline.nvim',
+      -- Enable `lukas-reineke/indent-blankline.nvim`
+      -- See `:help ibl`
+      main = 'ibl',
+      opts = {},
+    },
 
-  require 'kickstart.plugins.autoformat',
-  require 'kickstart.plugins.debug',
+    require 'kickstart.plugins.autoformat',
+    require 'kickstart.plugins.debug',
 
-}, {}
-)
+  }, {}
+  )
 
--- [[ Setting options ]]
--- See `:help vim.o`
--- NOTE: You can change these options as you wish!
+  -- [[ Setting options ]]
+  -- See `:help vim.o`
+  -- NOTE: You can change these options as you wish!
 
-require('settings')
+  require('settings')
 
--- [[ Basic Keymaps ]]
 
-require('keymaps')
-
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = highlight_group,
-  pattern = '*',
-})
-
--- [[ Configure Telescope ]]
--- See `:help telescope` and `:help telescope.setup()`
-
-require('telescope_settings')
-
--- [[ Configure Treesitter ]]
--- See `:help nvim-treesitter`
--- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
-
-require('treesitter_settings')
-
--- [[ Configure LSP ]]
---  This function gets run when an LSP connects to a particular buffer.
-
-require('lsp_settings')
-vim.g.rustaceanvim = {
-  -- Plugin configuration
-  tools = {
-  },
-  -- LSP configuration
-  server = {
-    on_attach = function(client, bufnr)
-      -- you can also put keymaps in here
+  -- [[ Highlight on yank ]]
+  -- See `:help vim.highlight.on_yank()`
+  local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+  vim.api.nvim_create_autocmd('TextYankPost', {
+    callback = function()
+      vim.highlight.on_yank()
     end,
-    default_settings = {
-      -- rust-analyzer language server configuration
-      ['rust-analyzer'] = {
+    group = highlight_group,
+    pattern = '*',
+  })
+
+  -- [[ Configure Telescope ]]
+  -- See `:help telescope` and `:help telescope.setup()`
+
+  require('telescope_settings')
+
+  -- [[ Configure Treesitter ]]
+  -- See `:help nvim-treesitter`
+  -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
+
+  require('treesitter_settings')
+
+  -- [[ Configure LSP ]]
+  --  This function gets run when an LSP connects to a particular buffer.
+
+  require('lsp_settings')
+  vim.g.rustaceanvim = {
+    -- Plugin configuration
+    tools = {
+    },
+    -- LSP configuration
+    server = {
+      on_attach = function(client, bufnr)
+        -- you can also put keymaps in here
+      end,
+      default_settings = {
+        -- rust-analyzer language server configuration
+        ['rust-analyzer'] = {
+        },
       },
     },
-  },
-  -- DAP configuration
-  dap = {
-  },
-}
+    -- DAP configuration
+    dap = {
+    },
+  }
 
--- [[ Configure nvim-cmp ]]
--- See `:help cmp`
+  -- [[ Configure nvim-cmp ]]
+  -- See `:help cmp`
 
-require('cmp_settings')
+  require('cmp_settings')
 
--- [[ Custom commands ]]
+  -- [[ Custom commands ]]
 
-vim.cmd [[command! Vterm execute 'vsplit | term://bash']]
-vim.cmd [[command! Sterm execute 'split| term://bash']]
-
+  vim.cmd [[command! Vterm execute 'vsplit | term']]
+  vim.cmd [[command! Sterm execute 'split | term']]
+end
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
