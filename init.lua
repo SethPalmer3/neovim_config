@@ -29,9 +29,10 @@ vim.opt.rtp:prepend(lazypath)
 -- require('lazy').setup('custom.one_liners')
 if vim.g.vscode then
   require('lazy').setup({
-    { 'numToStr/Comment.nvim', opts = {} },
+    { 'numToStr/Comment.nvim',     opts = {} },
 
-    { 'junegunn/vim-peekaboo', },
+    -- { 'junegunn/vim-peekaboo', },
+    { 'asvetliakov/vim-easymotion' },
   }, {});
 else
   require('lazy').setup({
