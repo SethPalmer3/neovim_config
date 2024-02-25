@@ -36,6 +36,7 @@ if vim.g.vscode then
   }, {});
 else
   require('lazy').setup({
+    { 'loctvl842/monokai-pro.nvim' },
     { import = 'custom' },
     -- NOTE: This is where your plugins related to LSP can be installed.
     --  The configuration is done below. Search for lspconfig to find it below.
