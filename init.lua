@@ -41,6 +41,13 @@ else
     -- NOTE: This is where your plugins related to LSP can be installed.
     --  The configuration is done below. Search for lspconfig to find it below.
     {
+      'windwp/nvim-autopairs',
+      event = "InsertEnter",
+      config = true
+      -- use opts = {} for passing setup options
+      -- this is equalent to setup({}) function
+    },
+    {
       "kylechui/nvim-surround",
       version = "*", -- Use for stability; omit to use `main` branch for the latest features
       event = "VeryLazy",
@@ -129,6 +136,7 @@ else
     dap = {
     },
   }
+
 
   -- [[ Configure nvim-cmp ]]
   -- See `:help cmp`

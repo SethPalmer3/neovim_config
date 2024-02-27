@@ -13,6 +13,7 @@ return {
   dependencies = {
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
+    'theHamsta/nvim-dap-virtual-text',
 
     -- Installs the debug adapters for you
     'williamboman/mason.nvim',
@@ -24,6 +25,9 @@ return {
   config = function()
     local dap = require 'dap'
     local dapui = require 'dapui'
+    local dapvirt = require 'nvim-dap-virtual-text'
+
+    dapvirt.setup()
 
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
@@ -42,7 +46,9 @@ return {
       },
     }
 
+
     -- Basic debugging keymaps, feel free to change to your liking!
+    vim.keymap.set({ 'n', 'v' }, '<leader>dK', require('dap.ui.widgets').hover, { desc = 'Debug: Terminate Session' })
     vim.keymap.set({ 'n', 'v' }, '<leader>de', dapui.eval, { desc = 'Debug: Evaluate Selected Code' })
     vim.keymap.set('n', '<leader>dq', dap.terminate, { desc = 'Debug: Terminate Session' })
     vim.keymap.set('n', '<leader>dc', dap.continue, { desc = 'Debug: Start/[C]ontinue' })
