@@ -147,6 +147,7 @@ else
 
   vim.cmd [[command! Vterm execute 'vsplit | term']]
   vim.cmd [[command! Sterm execute 'split | term']]
+  vim.cmd [[colorscheme catppuccin-frappe]]
 end
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
