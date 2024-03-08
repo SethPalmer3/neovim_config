@@ -1,3 +1,4 @@
+---@diagnostic disable: unused-local
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 -- [[ Basic Keymaps ]]
