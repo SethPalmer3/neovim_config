@@ -41,7 +41,18 @@ else
     { import = 'custom' },
     -- NOTE: This is where your plugins related to LSP can be installed.
     --  The configuration is done below. Search for lspconfig to find it below.
-    { 'echasnovski/mini.nvim',     version = '*' },
+    {
+      'echasnovski/mini.nvim',
+      version = '*',
+      config = function()
+        -- require('mini.cursorword').setup()
+        -- require('mini.indentscope').setup()
+        require('mini.bracketed').setup()
+        require('mini.ai').setup()
+        require('mini.move').setup()
+        require('mini.jump').setup()
+      end
+    },
     {
       'windwp/nvim-autopairs',
       event = "InsertEnter",
