@@ -40,8 +40,15 @@ else
   require('lazy').setup({
     { 'loctvl842/monokai-pro.nvim' },
     {
-      'Exafunction/codeium.vim',
-      event = 'BufEnter'
+      "Exafunction/codeium.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "hrsh7th/nvim-cmp",
+      },
+      config = function()
+        require("codeium").setup({
+        })
+      end
     },
     { import = 'custom' },
     -- NOTE: This is where your plugins related to LSP can be installed.
