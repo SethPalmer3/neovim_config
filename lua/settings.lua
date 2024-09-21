@@ -12,7 +12,7 @@ vim.o.mouse          = 'a'
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.o.clipboard      = 'unnamedplus'
-vim.api.nvim_set_option("clipboard", "unnamed")
+vim.api.nvim_set_option("clipboard", "unnamedplus")
 
 -- Enable break indent
 vim.o.breakindent   = true
